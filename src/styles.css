@@ -176,14 +176,6 @@ body {
   left: 0;
 }
 
-.top-1/2 {
-  top: 50%;
-}
-
-.left-1/2 {
-  left: 50%;
-}
-
 .transform {
   transform: translate(-50%, -50%);
 }

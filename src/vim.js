@@ -37,6 +37,7 @@ const VimPortfolio = () => {
             '3': 'Go to Blog',
             '4': 'Go to Recommendations',
             '5': 'Go to CV',
+            '6': 'Go to Contact',
             'gh': 'Open GitHub',
             'li': 'Open LinkedIn',
             'cv': 'View Resume',
@@ -63,6 +64,7 @@ const VimPortfolio = () => {
         title: "Amr Shams - Architect of Code and Systems",
         description: `
       A Vim aficionado, I advocate for keyboard-first workflows and elegant, minimalist solutions.
+      if this is your first time here, press :help to see available shortcuts.
     `,
     };
 
@@ -138,6 +140,17 @@ const VimPortfolio = () => {
                 break;
             case '5':
                 setCurrentSection(4);
+                break;
+            case '6':
+                setCurrentSection(5);
+                break;
+            case 'g':
+                if (newBuffer === 'gg') {
+                    setCurrentSection(0);
+                }
+                break;
+            case 'G':
+                setCurrentSection(sections.length - 1);
                 break;
             case 'Escape':
                 setKeyBuffer('');
@@ -219,12 +232,17 @@ const VimPortfolio = () => {
     const executeCommand = (cmd) => {
         switch (cmd) {
             case 'q':
+                if (showShortcuts){
                 setShowShortcuts(false);
+                } else {
                 window.close();
+                }
                 break;
             case 'w':
-                setStatusMessage('"portfolio.vim" written');
-                setTimeout(() => setStatusMessage(''), 2000);
+                if (currentSection === 3 && recommendation) {
+                setStatusMessage('Recommendation saved successfully!');
+                window.location.href = `mailto:amr.shams2015.as@gmail.com?subject=Recommendation&body=${recommendation}`;
+                }
                 break;
             case 'help':
                 setShowShortcuts(true);
@@ -364,9 +382,9 @@ const VimPortfolio = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="space-y-8 p-6 bg-gray-800 rounded-lg shadow-md"
-                        >
-                            <h2 className="text-4xl font-extrabold text-yellow-400 tracking-widest text-center">
+                            className="space-y-6"
+                            >
+                            <h2 className="text-3xl font-bold text-yellow-400">
                                 Contact Me I am friendly 🖖
                             </h2>
                             <p className="text-gray-300 text-lg text-center italic">

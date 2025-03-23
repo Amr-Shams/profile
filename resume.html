@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amr Aly - Resume</title>
+   <style>
+  /* Set the PDF page size to A4 with slightly increased margins */
+  @page {
+      size: A4;
+      margin: 2mm;
+  }
+
+  /* General body styles for a more relaxed layout */
+  body {
+      font-family: 'Arial', sans-serif;
+      font-size: 10pt; /* Increased font size */
+      line-height: 1.3; /* Slightly increased line spacing */
+      max-width: 100%;
+      margin: 0;
+      padding: 3mm;
+      color: #333;
+  }
+
+  header {
+      text-align: center;
+      margin-bottom: 15px; /* Increased margin */
+  }
+
+  h1 {
+      margin-bottom: 5px;
+      color: #2c3e50;
+      font-size: 1.5em; /* Slightly larger header */
+  }
+
+  .job-title {
+      font-style: italic;
+      margin-bottom: 5px;
+      font-size: 1em;
+  }
+
+  .contact-info {
+      margin-bottom: 15px;
+      font-size: 1em;
+  }
+
+  a {
+      color: #3498db;
+      text-decoration: none;
+  }
+
+  a:hover {
+      text-decoration: underline;
+  }
+
+  hr {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 15px 0;
+  }
+
+  h2 {
+      color: #2c3e50;
+      border-bottom: 1px solid #3498db;
+      padding-bottom: 5px;
+      margin-bottom: 12px;
+      font-size: 1.2em;
+  }
+
+  .section {
+      margin-bottom: 12px;
+  }
+
+  .experience-item, .project-item, .education-item {
+      margin-bottom: 12px;
+  }
+
+  .job-header, .project-header, .education-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 1em;
+  }
+
+  .job-company, .project-name, .school-name {
+      font-weight: bold;
+  }
+
+  .job-duration, .education-duration {
+      color: #7f8c8d;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      font-size: 1em;
+  }
+
+  .technologies {
+      font-style: italic;
+      color: #2980b9;
+      font-size: 1em;
+  }
+
+  .skills-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      font-size: 1em;
+  }
+
+  @media print {
+      body {
+          max-width: 100%;
+          margin: 0;
+          padding: 8mm;
+      }
+  }
+</style>
+
+
+</head>
+<body>
+    <header>
+        <h1>Amr Aly</h1>
+        <div class="job-title"><strong>Applying for:</strong> Software Engineer</div>
+        <div class="contact-info">
+            📧 <a href="mailto:amr.shams2015.as@gmail.com">amr.shams2015.as@gmail.com</a> | 
+            🐙 <a href="https://github.com/Amr-Shams">GitHub: Amr-Shams</a> | 
+            🌐 <a href="https://my-awesom-page.vercel.app">My Awesome Page</a>
+        </div>
+    </header>
+    
+    <section class="section">
+        <h2>🏫 Education</h2>
+        
+        <div class="education-item">
+            <div class="education-header">
+                <div class="school-name">Cairo University – Cairo, Egypt</div>
+                <div class="education-duration">08/2019 – 01/2025</div>
+            </div>
+            <div>B.S. in Computer Engineering</div>
+        </div>
+        
+        <div class="education-item">
+            <div class="education-header">
+                <div class="school-name">San Jose State University – California, USA</div>
+                <div class="education-duration">08/2023 – 12/2023</div>
+            </div>
+            <div>Exchange Program</div>
+        </div>
+    </section>
+    
+    <hr>
+    
+    <section class="section">
+        <h2>💼 Experience</h2>
+        
+        <div class="experience-item">
+            <div class="job-header">
+                <div class="job-company">CrossWorkers</div>
+                <div class="job-duration">07/2024 – 09/2024</div>
+            </div>
+            <div class="job-title">Software Engineer Intern</div>
+            <ul>
+                <li>Migrated legacy PHP code to modern Laravel framework, improving maintainability.</li>
+                <li>Optimized SQL queries, reducing response time by 30%.</li>
+                <li>Developed frontend features using Vue.js and integrated profiling libraries.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> PHP, Laravel, Vue.js, SQL</div>
+        </div>
+        
+        <div class="experience-item">
+            <div class="job-header">
+                <div class="job-company">Siemens</div>
+                <div class="job-duration">10/2023 – 05/2024</div>
+            </div>
+            <div class="job-title">Software Developer Intern</div>
+            <ul>
+                <li>Developed automation tools for testing and real-time data visualization.</li>
+                <li>Added new features for Angove tool, improving automated coverage testing.</li>
+                <li>Created an analysis tool to visualize and aggregate data from multiple sources.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> Python, Bash, Go, CLI</div>
+        </div>
+        
+        <div class="experience-item">
+            <div class="job-header">
+                <div class="job-company">Bitnine Global</div>
+                <div class="job-duration">04/2023 – 10/2023</div>
+            </div>
+            <div class="job-title">Backend Developer Intern</div>
+            <ul>
+                <li>Developed gRPC, REST APIs, and socket apps using C, Go, and Node.js.</li>
+                <li>Built an internal graph database tool using C and Postgres.</li>
+                <li>Created a migration tool to automate data transfer with PgBulkload-like capabilities.</li>
+                <li>Increased vector search performance with Go and optimized cipher queries.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> C, Go, PHP, Postgres, Apache AGE, Neo4j</div>
+        </div>
+    </section>
+    
+    <hr>
+    
+    <section class="section">
+        <h2>🚀 Projects</h2>
+        
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">OTNEngine – Graduation Project (2024)</div>
+            </div>
+            <ul>
+                <li>Developed a scalable simulation tool for OTN frames, reducing fabrication costs by 30%.</li>
+                <li>Built core functionalities using C++, Go, and PostgreSQL with a microservices architecture.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> C++, Go, PostgreSQL, Angular, AWS</div>
+        </div>
+        
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">Blocker – Blockchain Simulator</div>
+            </div>
+            <ul>
+                <li>Simulated over 20 blockchain cases using Go and LevelDB.</li>
+                <li>Designed communication channels using REST, gRPC, and WebSockets.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> Go, LevelDB, Docker</div>
+        </div>
+        
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">Sniffer – ARP Protocol Decipher Extension</div>
+            </div>
+            <ul>
+                <li>Built a macOS decipher file using ARP to check the connected devices.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> React, Apple Script</div>
+        </div>
+    </section>
+    
+    <hr>
+    
+    <section class="section">
+        <h2>🛠️ Skills</h2>
+        <div class="skills-container">
+            <div>
+                <strong>Programming Languages:</strong>
+                <p>Python, Go, C/C++, JavaScript, PHP, SQL</p>
+            </div>
+            <div>
+                <strong>Tools and Frameworks:</strong>
+                <p>Docker, Node, Vue.js, Postgres, Apache AGE, Bash, gRPC, REST APIs, React</p>
+            </div>
+            <div>
+                <strong>Languages:</strong>
+                <p>English (fluent), Arabic (native)</p>
+            </div>
+        </div>
+    </section>
+    
+    <hr>
+    
+    <section class="section">
+        <h2>🎯 Extracurricular</h2>
+        
+        <div class="experience-item">
+            <div class="job-title">Teaching Assistant – Cybersecurity Class, Cairo University</div>
+            <ul>
+                <li>Held summer sessions to guide students in cybersecurity topics.</li>
+            </ul>
+        </div>
+        
+        <div class="experience-item">
+            <div class="job-title">Technical Writer</div>
+            <ul>
+                <li>Published articles on Dev Community and Hashnode, recognized as top posts.</li>
+            </ul>
+        </div>
+    </section>
+</body>
+</html>

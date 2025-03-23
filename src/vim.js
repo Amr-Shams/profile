@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { User, Code, Book, MessageSquare, FileText } from "lucide-react";
 import { GitHub, Linkedin, Twitter, Mail as Envelope } from "react-feather";
-
 const ElevatedPortfolio = () => {
   const [mode, setMode] = useState("normal");
   const [keyBuffer, setKeyBuffer] = useState("");
   const [currentSection, setCurrentSection] = useState(0);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [showResume, setShowResume] = useState(false);
   const [recommendation, setRecommendation] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [visualFeedback, setVisualFeedback] = useState("");
+  const [resumeContent, setResumeContent] = useState("");
+  const [isLoadingResume, setIsLoadingResume] = useState(false);
   const [articles, setArticles] = useState([]);
   const [repos, setRepos] = useState([]);
 
@@ -90,6 +92,25 @@ If this is your first time here, press h or :help to see available shortcuts.`,
       setArticles(articles.slice(0, 5));
     } catch (error) {
       console.log("Error fetching articles:", error);
+    }
+  };
+
+  const fetchResume = async() =>  { 
+    try {
+     setIsLoadingResume(true);
+      const response = await fetch("https://raw.githubusercontent.com/Amr-Shams/profile/master/resume.md");
+      if(!response.ok){
+        throw new Error("Failed to fetch resume");
+      }
+      const data = await response.text();
+      setResumeContent(data);
+      setShowResume(true);
+    }catch(error){
+      console.log("Error fetching resume:", error);
+      setStatusMessage("Failed to fetch resume");
+      setTimeout(() => setStatusMessage(""), 2000);
+    }finally{
+      setIsLoadingResume(false);
     }
   };
 
@@ -213,6 +234,11 @@ If this is your first time here, press h or :help to see available shortcuts.`,
   useEffect(() => {
     const handleKeyPress = (e) => {
       // Prevent default for vim navigation keys
+      if (e.key === "Escape"){ 
+        setShowResume(false);
+        setShowShortcuts(false);
+        e.preventDefault();
+      }
       if (["j", "k", "h", "l", "i"].includes(e.key)) {
         e.preventDefault();
       }
@@ -276,10 +302,8 @@ If this is your first time here, press h or :help to see available shortcuts.`,
         );
         break;
       case "cv":
-        window.open(
-          "https://drive.google.com/file/d/1jZ8xTXvAP7qqkuxnDJXPu4s30UhcL4GD/view?usp=share_link",
-          "_blank",
-        );
+         setCurrentSection(4);
+        fetchResume();
         break;
       case "dcv":
         const link = document.createElement("a");
@@ -374,23 +398,30 @@ If this is your first time here, press h or :help to see available shortcuts.`,
         );
 
       case "cv":
-        return (
-          <div className="content-section">
-            <h2 className="section-title">Curriculum Vitae</h2>
-            <div className="code-editor">
-              <p>You can view or download my CV using the commands below:</p>
-              <ul className="cv-commands">
-                <li>
-                  <code>:cv</code> - View Resume
-                </li>
-                <li>
-                  <code>:dcv</code> - Download Resume
-                </li>
-              </ul>
-            </div>
-          </div>
-        );
-
+  return (
+    <div className="content-section">
+      <h2 className="section-title">Curriculum Vitae</h2>
+      {isLoadingResume ? (
+        <div className="loading-indicator">Loading resume...</div>
+      ) : showResume ? (
+        <div className="resume-container">
+          <pre className="resume-content">{resumeContent}</pre>
+                  </div>
+      ) : (
+        <div className="code-editor">
+          <p>You can view or download my CV using the commands below:</p>
+          <ul className="cv-commands">
+            <li>
+              <code>:cv</code> - View Resume
+            </li>
+            <li>
+              <code>:dcv</code> - Download Resume
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
       case "contact":
         return (
           <div className="content-section">

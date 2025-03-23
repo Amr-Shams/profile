@@ -1,17 +1,49 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { User, Code, Book, MessageSquare, FileText } from "lucide-react";
 import { GitHub, Linkedin, Twitter, Mail as Envelope } from "react-feather";
+
+const CONSTANTS = {
+  // Personal information
+  name: "Amr Shams",
+  title: "Architect of Code and Systems",
+  description:
+    "A Vim aficionado, I advocate for keyboard-first workflows and elegant, minimalist solutions.",
+  helpText:
+    "If this is your first time here, press h or :help to see available shortcuts.",
+
+  githubUrl: "https://github.com/Amr-Shams",
+  linkedinUrl: "https://www.linkedin.com/in/amr-abdelmaqsoud-b5107519b/",
+  twitterUrl: "https://twitter.com/AMR_SHAMS07",
+  emailAddress: "amr.shams2015.as@gmail.com",
+  emailContactAddress: "amrshams2015@gmail.com",
+
+  // Resume related
+  resumeUrl: "https://amr-shams.github.io/profile", // New resume URL
+  devToUsername: "nightbird07",
+  githubApiUsername: "Amr-Shams",
+
+  contactMessage:
+    "Beam me up, fellow code wrangler. Let's connect and geek out together!",
+
+  // ASCII Art
+  asciiArt: `
+         __     ______  _    _  __          _______ _   _ 
+         \\ \\   / / __ \\| |  | | \\ \\        / /_   _| \\ | |
+          \\ \\_/ / |  | | |  | |  \\ \\  /\\  / /  | | |  \\| |
+           \\   /| |  | | |  | |   \\ \\/  \\/ /   | | | . \` |
+            | | | |__| | |__| |    \\  /\\  /   _| |_| |\\  |
+            |_|  \\____/ \\____/      \\/  \\/   |_____|_| \\_|
+        `,
+};
+
 const ElevatedPortfolio = () => {
   const [mode, setMode] = useState("normal");
   const [keyBuffer, setKeyBuffer] = useState("");
   const [currentSection, setCurrentSection] = useState(0);
   const [showShortcuts, setShowShortcuts] = useState(false);
-  const [showResume, setShowResume] = useState(false);
   const [recommendation, setRecommendation] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [visualFeedback, setVisualFeedback] = useState("");
-  const [resumeContent, setResumeContent] = useState("");
-  const [isLoadingResume, setIsLoadingResume] = useState(false);
   const [articles, setArticles] = useState([]);
   const [repos, setRepos] = useState([]);
 
@@ -48,7 +80,6 @@ const ElevatedPortfolio = () => {
       gh: "Open GitHub",
       li: "Open LinkedIn",
       cv: "View Resume",
-      dcv: "Download Resume",
       mail: "Send Mail",
     },
     insert: {
@@ -61,21 +92,20 @@ const ElevatedPortfolio = () => {
       ":gh": "Open GitHub",
       ":li": "Open LinkedIn",
       ":cv": "View Resume",
-      ":dcv": "Download Resume",
       ":mail": "Send Mail",
     },
   };
 
   const aboutContent = {
-    title: "Amr Shams - Architect of Code and Systems",
-    description: `A Vim aficionado, I advocate for keyboard-first workflows and elegant, minimalist solutions.
-If this is your first time here, press h or :help to see available shortcuts.`,
+    title: `${CONSTANTS.name} - ${CONSTANTS.title}`,
+    description: `${CONSTANTS.description}
+${CONSTANTS.helpText}`,
   };
 
   const fetchRepos = async () => {
     try {
       const response = await fetch(
-        "https://api.github.com/users/Amr-Shams/repos",
+        `https://api.github.com/users/${CONSTANTS.githubApiUsername}/repos`,
       );
       const data = await response.json();
       const filteredRepos = data.filter((repo) => !repo.archived);
@@ -84,33 +114,15 @@ If this is your first time here, press h or :help to see available shortcuts.`,
       console.error("Error fetching repositories:", error);
     }
   };
+
   const fetchArticles = async () => {
     try {
       const articles = await fetch(
-        `https://dev.to/api/articles?username=nightbird07`,
+        `https://dev.to/api/articles?username=${CONSTANTS.devToUsername}`,
       ).then((res) => res.json());
       setArticles(articles.slice(0, 5));
     } catch (error) {
       console.log("Error fetching articles:", error);
-    }
-  };
-
-  const fetchResume = async() =>  { 
-    try {
-     setIsLoadingResume(true);
-      const response = await fetch("https://raw.githubusercontent.com/Amr-Shams/profile/master/resume.md");
-      if(!response.ok){
-        throw new Error("Failed to fetch resume");
-      }
-      const data = await response.text();
-      setResumeContent(data);
-      setShowResume(true);
-    }catch(error){
-      console.log("Error fetching resume:", error);
-      setStatusMessage("Failed to fetch resume");
-      setTimeout(() => setStatusMessage(""), 2000);
-    }finally{
-      setIsLoadingResume(false);
     }
   };
 
@@ -234,8 +246,7 @@ If this is your first time here, press h or :help to see available shortcuts.`,
   useEffect(() => {
     const handleKeyPress = (e) => {
       // Prevent default for vim navigation keys
-      if (e.key === "Escape"){ 
-        setShowResume(false);
+      if (e.key === "Escape") {
         setShowShortcuts(false);
         e.preventDefault();
       }
@@ -286,36 +297,23 @@ If this is your first time here, press h or :help to see available shortcuts.`,
       case "w":
         if (currentSection === 3 && recommendation) {
           setStatusMessage("Recommendation saved successfully!");
-          window.location.href = `mailto:amr.shams2015.as@gmail.com?subject=Recommendation&body=${recommendation}`;
+          window.location.href = `mailto:${CONSTANTS.emailAddress}?subject=Recommendation&body=${recommendation}`;
         }
         break;
       case "help":
         setShowShortcuts(true);
         break;
       case "gh":
-        window.open("https://github.com/Amr-Shams", "_blank");
+        window.open(CONSTANTS.githubUrl, "_blank");
         break;
       case "li":
-        window.open(
-          "https://www.linkedin.com/in/amr-abdelmaqsoud-b5107519b/",
-          "_blank",
-        );
+        window.open(CONSTANTS.linkedinUrl, "_blank");
         break;
       case "cv":
-         setCurrentSection(4);
-        fetchResume();
-        break;
-      case "dcv":
-        const link = document.createElement("a");
-        link.href =
-          "https://drive.google.com/uc?export=download&id=1jZ8xTXvAP7qqkuxnDJXPu4s30UhcL4GD";
-        link.download = "Amr Shams - Resume.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        window.open(CONSTANTS.resumeUrl, "_blank");
         break;
       case "mail":
-        window.location.href = "mailto:amr.shams2015.as@gmail.com";
+        window.location.href = `mailto:${CONSTANTS.emailAddress}`;
         break;
       default:
         setStatusMessage(`Error: Unknown command "${cmd}"`);
@@ -398,41 +396,29 @@ If this is your first time here, press h or :help to see available shortcuts.`,
         );
 
       case "cv":
-  return (
-    <div className="content-section">
-      <h2 className="section-title">Curriculum Vitae</h2>
-      {isLoadingResume ? (
-        <div className="loading-indicator">Loading resume...</div>
-      ) : showResume ? (
-        <div className="resume-container">
-          <pre className="resume-content">{resumeContent}</pre>
-                  </div>
-      ) : (
-        <div className="code-editor">
-          <p>You can view or download my CV using the commands below:</p>
-          <ul className="cv-commands">
-            <li>
-              <code>:cv</code> - View Resume
-            </li>
-            <li>
-              <code>:dcv</code> - Download Resume
-            </li>
-          </ul>
-        </div>
-      )}
-    </div>
-  );
+        return (
+          <div className="content-section">
+            <h2 className="section-title">Curriculum Vitae</h2>
+            <div className="code-editor">
+              <p>You can view or download my CV using the commands below:</p>
+              <ul className="cv-commands">
+                <li>
+                  <code>:cv</code> - View Resume (redirects to{" "}
+                  {CONSTANTS.resumeUrl})
+                </li>
+              </ul>
+            </div>
+          </div>
+        );
+
       case "contact":
         return (
           <div className="content-section">
             <h2 className="section-title">Contact</h2>
-            <p className="section-text">
-              Beam me up, fellow code wrangler. Let's connect and geek out
-              together!
-            </p>
+            <p className="section-text">{CONSTANTS.contactMessage}</p>
             <div className="contact-links">
               <a
-                href="https://github.com/Amr-Shams"
+                href={CONSTANTS.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact-link"
@@ -441,7 +427,7 @@ If this is your first time here, press h or :help to see available shortcuts.`,
                 <span>GitHub</span>
               </a>
               <a
-                href="https://www.linkedin.com/in/amr-abdelmaqsoud-b5107519b/"
+                href={CONSTANTS.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact-link"
@@ -450,7 +436,7 @@ If this is your first time here, press h or :help to see available shortcuts.`,
                 <span>LinkedIn</span>
               </a>
               <a
-                href="https://twitter.com/AMR_SHAMS07"
+                href={CONSTANTS.twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact-link"
@@ -459,7 +445,7 @@ If this is your first time here, press h or :help to see available shortcuts.`,
                 <span>Twitter</span>
               </a>
               <a
-                href="mailto:amrshams2015@gmail.com"
+                href={`mailto:${CONSTANTS.emailContactAddress}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact-link"
@@ -506,16 +492,7 @@ If this is your first time here, press h or :help to see available shortcuts.`,
         </div>
       )}
 
-      <div className="ascii-header">
-        {`
-         __     ______  _    _  __          _______ _   _ 
-         \\ \\   / / __ \\| |  | | \\ \\        / /_   _| \\ | |
-          \\ \\_/ / |  | | |  | |  \\ \\  /\\  / /  | | |  \\| |
-           \\   /| |  | | |  | |   \\ \\/  \\/ /   | | | . \` |
-            | | | |__| | |__| |    \\  /\\  /   _| |_| |\\  |
-            |_|  \\____/ \\____/      \\/  \\/   |_____|_| \\_|
-        `}
-      </div>
+      <div className="ascii-header">{CONSTANTS.asciiArt}</div>
 
       <div className="portfolio-layout">
         {/* Sidebar */}

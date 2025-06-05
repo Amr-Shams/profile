@@ -27,13 +27,13 @@ const CONSTANTS = {
 
   // ASCII Art
   asciiArt: `
-         __     ______  _    _  __          _______ _   _ 
-         \\ \\   / / __ \\| |  | | \\ \\        / /_   _| \\ | |
-          \\ \\_/ / |  | | |  | |  \\ \\  /\\  / /  | | |  \\| |
-           \\   /| |  | | |  | |   \\ \\/  \\/ /   | | | . \` |
-            | | | |__| | |__| |    \\  /\\  /   _| |_| |\\  |
-            |_|  \\____/ \\____/      \\/  \\/   |_____|_| \\_|
-        `,
+ █████╗ ███╗   ███╗██████╗     ███████╗██╗  ██╗ █████╗ ███╗   ███╗███████╗
+██╔══██╗████╗ ████║██╔══██╗    ██╔════╝██║  ██║██╔══██╗████╗ ████║██╔════╝
+███████║██╔████╔██║██████╔╝    ███████╗███████║███████║██╔████╔██║███████╗
+██╔══██║██║╚██╔╝██║██╔══██╗    ╚════██║██╔══██║██╔══██║██║╚██╔╝██║╚════██║
+██║  ██║██║ ╚═╝ ██║██║  ██║    ███████║██║  ██║██║  ██║██║ ╚═╝ ██║███████║
+╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝
+`,
 };
 
 const ElevatedPortfolio = () => {
@@ -96,20 +96,67 @@ const ElevatedPortfolio = () => {
     },
   };
 
+  const executeCommand = useCallback(
+    (cmd) => {
+      switch (cmd) {
+        case "q":
+          if (showShortcuts) {
+            setShowShortcuts(false);
+          } else {
+            window.close();
+          }
+          break;
+        case "w":
+          if (currentSection === 3 && recommendation) {
+            setStatusMessage("Recommendation saved successfully!");
+            window.location.href = `mailto:${CONSTANTS.emailAddress}?subject=Recommendation&body=${recommendation}`;
+          }
+          break;
+        case "help":
+          setShowShortcuts(true);
+          break;
+        case "gh":
+          window.open(CONSTANTS.githubUrl, "_blank");
+          break;
+        case "li":
+          window.open(CONSTANTS.linkedinUrl, "_blank");
+          break;
+        case "cv":
+          window.open(CONSTANTS.resumeUrl, "_blank");
+          break;
+        case "mail":
+          window.location.href = `mailto:${CONSTANTS.emailAddress}`;
+          break;
+        default:
+          setStatusMessage(`Error: Unknown command "${cmd}"`);
+          setTimeout(() => setStatusMessage(""), 2000);
+          break;
+      }
+    },
+    [showShortcuts, currentSection, recommendation]
+  );
+
   const aboutContent = {
     title: `${CONSTANTS.name} - ${CONSTANTS.title}`,
     description: `${CONSTANTS.description}
 ${CONSTANTS.helpText}`,
   };
-
   const fetchRepos = async () => {
     try {
       const response = await fetch(
-        `https://api.github.com/users/${CONSTANTS.githubApiUsername}/repos`,
+        `https://api.github.com/users/${CONSTANTS.githubApiUsername}/repos`
       );
       const data = await response.json();
-      const filteredRepos = data.filter((repo) => !repo.archived);
-      setRepos(filteredRepos.slice(0, 3));
+
+      const filteredRepos = data.filter(
+        (repo) => !repo.fork && !repo.archived && !repo.private
+      );
+      const shuffled = filteredRepos
+        .map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
+      shuffled.sort((a, b) => b.stargazers_count - a.stargazers_count);
+      setRepos(shuffled.slice(0, 4));
     } catch (error) {
       console.error("Error fetching repositories:", error);
     }
@@ -118,7 +165,7 @@ ${CONSTANTS.helpText}`,
   const fetchArticles = async () => {
     try {
       const articles = await fetch(
-        `https://dev.to/api/articles?username=${CONSTANTS.devToUsername}`,
+        `https://dev.to/api/articles?username=${CONSTANTS.devToUsername}`
       ).then((res) => res.json());
       setArticles(articles.slice(0, 5));
     } catch (error) {
@@ -144,7 +191,7 @@ ${CONSTANTS.helpText}`,
       const newBuffer = keyBuffer + e.key;
       setKeyBuffer(newBuffer);
 
-      switch (e.key) {
+      switch (e.key.toLowerCase()) {
         case "i":
           setMode("insert");
           setStatusMessage("-- INSERT --");
@@ -201,7 +248,7 @@ ${CONSTANTS.helpText}`,
           break;
       }
     },
-    [keyBuffer, sections.length],
+    [keyBuffer, sections.length, executeCommand, shortcuts.normal]
   );
 
   const handleInsertMode = useCallback(
@@ -221,7 +268,7 @@ ${CONSTANTS.helpText}`,
         }
       }
     },
-    [currentSection],
+    [currentSection]
   );
 
   const handleCommandMode = useCallback(
@@ -240,7 +287,7 @@ ${CONSTANTS.helpText}`,
         setStatusMessage((prev) => prev + e.key);
       }
     },
-    [statusMessage],
+    [statusMessage, executeCommand]
   );
 
   useEffect(() => {
@@ -284,44 +331,6 @@ ${CONSTANTS.helpText}`,
     handleInsertMode,
     handleCommandMode,
   ]);
-
-  const executeCommand = (cmd) => {
-    switch (cmd) {
-      case "q":
-        if (showShortcuts) {
-          setShowShortcuts(false);
-        } else {
-          window.close();
-        }
-        break;
-      case "w":
-        if (currentSection === 3 && recommendation) {
-          setStatusMessage("Recommendation saved successfully!");
-          window.location.href = `mailto:${CONSTANTS.emailAddress}?subject=Recommendation&body=${recommendation}`;
-        }
-        break;
-      case "help":
-        setShowShortcuts(true);
-        break;
-      case "gh":
-        window.open(CONSTANTS.githubUrl, "_blank");
-        break;
-      case "li":
-        window.open(CONSTANTS.linkedinUrl, "_blank");
-        break;
-      case "cv":
-        window.open(CONSTANTS.resumeUrl, "_blank");
-        break;
-      case "mail":
-        window.location.href = `mailto:${CONSTANTS.emailAddress}`;
-        break;
-      default:
-        setStatusMessage(`Error: Unknown command "${cmd}"`);
-        setTimeout(() => setStatusMessage(""), 2000);
-        break;
-    }
-  };
-
   const renderContent = () => {
     const section = sections[currentSection];
 
@@ -502,7 +511,9 @@ ${CONSTANTS.helpText}`,
             return (
               <div
                 key={section.id}
-                className={`sidebar-item ${index === currentSection ? "active" : ""}`}
+                className={`sidebar-item ${
+                  index === currentSection ? "active" : ""
+                }`}
               >
                 <Icon size={16} />
                 <span>{section.title}</span>

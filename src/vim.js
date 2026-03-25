@@ -91,7 +91,9 @@ DevOps:    Docker, Git, CI/CD, Nginx, Prometheus
       return `
 Career Timeline
 ───────────────
-* Oct 2024 - Present  | IKEA        | Software Engineer
+* Oct 2025 - Present | ITI          | Software Engineer 
+  └─ Building enterprise tools and external platforms 
+* Oct 2024 - Oct 2025 | IKEA        | Software Engineer
   └─ Building enterprise tools and internal platforms.
 
 * Jan 2024 - Oct 2024 | Fedni       | Full Stack Engineer

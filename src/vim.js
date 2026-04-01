@@ -48,7 +48,7 @@ const getWelcomeMessage = () => `
 
 ${CONSTANTS.title}
 
-💡 Tip: This portfolio is a Vim-inspired terminal.
+Tip: This portfolio is a Vim-inspired terminal.
 Press 'i' to type, 'esc' to exit, and 'h' for help. Use j/k to navigate sections.
 `;
 
@@ -120,19 +120,19 @@ Recent Articles on Dev.to
 ─────────────────────────
 ${articles.map(article =>
         `* ${article.title}
-  └─ 📖 ${article.url}`
+  └─ ${article.url}`
       ).join("\n")}
 `;
     case 'contact':
       return `
 Get In Touch
 ────────────
-📧 Email:    ${CONSTANTS.email}
-🐙 GitHub:   ${CONSTANTS.githubUrl}
-💼 LinkedIn: ${CONSTANTS.linkedinUrl}
-🐦 Twitter:  ${CONSTANTS.twitterUrl}
+Email:    ${CONSTANTS.email}
+GitHub:   ${CONSTANTS.githubUrl}
+LinkedIn: ${CONSTANTS.linkedinUrl}
+Twitter:  ${CONSTANTS.twitterUrl}
 
-💬 Beam me up, fellow code wrangler! Let's build something amazing.
+Beam me up, fellow code wrangler! Let's build something amazing.
 `;
     default:
       return "";
@@ -174,7 +174,6 @@ const useDataFetching = () => {
 
 const VimPortfolio = () => {
   const [mode, setMode] = useState("normal");
-  // --- FINAL FIX #1 --- Initialize state with the correctly structured welcome message object.
   const [history, setHistory] = useState([
     { type: 'system', content: getWelcomeMessage(), timestamp: Date.now() }
   ]);
@@ -199,7 +198,6 @@ const VimPortfolio = () => {
     if (!cmd) return;
     const trimmed = cmd.trim().toLowerCase();
 
-    // Prevent adding the initial 'about' command to the visual history
     if (cmd !== 'about' || history.length > 1) {
       addToHistory("command", trimmed);
     }
@@ -228,7 +226,6 @@ const VimPortfolio = () => {
         setShowHelp(true);
         break;
       case "clear":
-        // Keep the welcome message on clear
         setHistory([
           { type: 'system', content: getWelcomeMessage(), timestamp: Date.now() }
         ]);
@@ -252,14 +249,13 @@ const VimPortfolio = () => {
     }
   }, [data, addToHistory, history.length]);
 
-  // --- FINAL FIX #2 --- This useEffect now only loads the initial 'about' section and handles API errors.
   useEffect(() => {
     executeCommand('about');
     if (error) {
       addToHistory("error", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]); // Run only once on mount (and if an error occurs)
+  }, [error]);
 
   useEffect(() => {
     terminalRef.current?.scrollTo(0, terminalRef.current.scrollHeight);

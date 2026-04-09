@@ -1,123 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amr Abdelmaqsoud | Resume</title>
-    <meta
-      name="description"
-      content="Amr Abdelmaqsoud resume rendered directly from the LaTeX source."
-    />
-    <style>
-      :root {
-        color-scheme: light;
-        --page-bg: #f3efe7;
-        --panel-bg: rgba(255, 255, 255, 0.82);
-        --ink: #14212b;
-        --muted: #4e5c67;
-        --accent: #1a5276;
-        --edge: rgba(20, 33, 43, 0.12);
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: var(--ink);
-        background:
-          radial-gradient(circle at top, rgba(26, 82, 118, 0.14), transparent 30%),
-          linear-gradient(180deg, #faf8f2 0%, var(--page-bg) 100%);
-      }
-
-      main {
-        width: min(1120px, calc(100vw - 32px));
-        margin: 0 auto;
-        padding: 24px 0 40px;
-      }
-
-      .topbar {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 20px;
-        padding: 16px 18px;
-        border: 1px solid var(--edge);
-        border-radius: 18px;
-        background: var(--panel-bg);
-        backdrop-filter: blur(18px);
-        box-shadow: 0 18px 45px rgba(20, 33, 43, 0.08);
-      }
-
-      .title {
-        margin: 0;
-        font-size: clamp(1.1rem, 2vw, 1.5rem);
-      }
-
-      .subtitle {
-        margin: 4px 0 0;
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
-
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .button {
-        appearance: none;
-        border: 0;
-        border-radius: 999px;
-        padding: 11px 16px;
-        background: var(--accent);
-        color: #fff;
-        font: inherit;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      .button.secondary {
-        background: #e6edf2;
-        color: var(--ink);
-      }
-
-      .resume-shell {
-        padding: 18px;
-        border-radius: 28px;
-        border: 1px solid rgba(20, 33, 43, 0.08);
-        background: rgba(255, 255, 255, 0.66);
-        box-shadow: 0 28px 70px rgba(20, 33, 43, 0.12);
-        overflow: auto;
-      }
-
-      latex-js {
-        display: block;
-        min-width: 800px;
-      }
-    </style>
-    <script src="https://cdn.jsdelivr.net/gh/michael-brade/LaTeX.js@0.12.6/dist/latex.js"></script>
-  </head>
-  <body>
-    <main>
-      <section class="topbar">
-        <div>
-          <h1 class="title">Amr Abdelmaqsoud Resume</h1>
-          <p class="subtitle">Static HTML generated from <code>resume/cv.tex</code>.</p>
-        </div>
-        <div class="actions">
-          <a class="button" href="./public/resume.tex">Open LaTeX</a>
-          <button class="button secondary" type="button" onclick="window.print()">Print / Save PDF</button>
-        </div>
-      </section>
-      <section class="resume-shell">
-        <latex-js baseURL="https://cdn.jsdelivr.net/gh/michael-brade/LaTeX.js@0.12.6/dist/" hyphenate="false">%% Amr Abdelmaqsoud | CV
+%% Amr Abdelmaqsoud | CV
 %% Compile with: pdflatex cv.tex
 \documentclass[a4paper,10pt]{article}
 
@@ -177,7 +58,7 @@
 }
 
 \newcommand{\skillrow}[2]{%
-    \textbf{#1:} &amp; #2 \\[0.3mm]%
+    \textbf{#1:} & #2 \\[0.3mm]%
 }
 
 % Body font size
@@ -308,8 +189,3 @@ orchestration engines, and tools used by real people.
 \textbf{Study Abroad (Scholarship)} | San Jose State University, Spring 2023
 
 \end{document}
-</latex-js>
-      </section>
-    </main>
-  </body>
-</html>

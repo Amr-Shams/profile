@@ -1,315 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amr Abdelmaqsoud | Resume</title>
-    <meta
-      name="description"
-      content="Amr Abdelmaqsoud resume rendered directly from the LaTeX source."
-    />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amr Aly - Resume</title>
     <style>
-      :root {
-        color-scheme: light;
-        --page-bg: #f3efe7;
-        --panel-bg: rgba(255, 255, 255, 0.82);
-        --ink: #14212b;
-        --muted: #4e5c67;
-        --accent: #1a5276;
-        --edge: rgba(20, 33, 43, 0.12);
-      }
+        /* Set the PDF page size to A4 with minimal margins */
+        @page {
+            size: A4;
+            margin: 5mm;
+        }
 
-      * {
-        box-sizing: border-box;
-      }
+        /* General body styles adjusted for maximum compactness */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            /* Slightly smaller font size */
+            line-height: 1.1;
+            /* Tighter line spacing */
+            max-width: 100%;
+            margin: 0;
+            padding: 5mm;
+            /* Reduced padding */
+            color: #333;
+            position: relative;
+        }
 
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: var(--ink);
-        background:
-          radial-gradient(circle at top, rgba(26, 82, 118, 0.14), transparent 30%),
-          linear-gradient(180deg, #faf8f2 0%, var(--page-bg) 100%);
-      }
+        header {
+            text-align: center;
+            margin-bottom: 5px;
+            /* Reduced bottom margin */
+        }
 
-      main {
-        width: min(1120px, calc(100vw - 32px));
-        margin: 0 auto;
-        padding: 24px 0 40px;
-      }
+        h1 {
+            margin-bottom: 2px;
+            color: #2c3e50;
+            font-size: 1.3em;
+            /* Slightly smaller header */
+        }
 
-      .topbar {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 20px;
-        padding: 16px 18px;
-        border: 1px solid var(--edge);
-        border-radius: 18px;
-        background: var(--panel-bg);
-        backdrop-filter: blur(18px);
-        box-shadow: 0 18px 45px rgba(20, 33, 43, 0.08);
-      }
+        .job-title {
+            font-style: italic;
+            margin-bottom: 3px;
+            font-size: 0.85em;
+        }
 
-      .title {
-        margin: 0;
-        font-size: clamp(1.1rem, 2vw, 1.5rem);
-      }
+        .contact-info {
+            margin-bottom: 5px;
+            font-size: 0.85em;
+        }
 
-      .subtitle {
-        margin: 4px 0 0;
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
 
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
+        a:hover {
+            text-decoration: underline;
+        }
 
-      .button {
-        appearance: none;
-        border: 0;
-        border-radius: 999px;
-        padding: 11px 16px;
-        background: var(--accent);
-        color: #fff;
-        font: inherit;
-        text-decoration: none;
-        cursor: pointer;
-      }
+        hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 5px 0;
+        }
 
-      .button.secondary {
-        background: #e6edf2;
-        color: var(--ink);
-      }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 2px;
+            margin-bottom: 5px;
+            font-size: 1em;
+        }
 
-      .resume-shell {
-        padding: 18px;
-        border-radius: 28px;
-        border: 1px solid rgba(20, 33, 43, 0.08);
-        background: rgba(255, 255, 255, 0.66);
-        box-shadow: 0 28px 70px rgba(20, 33, 43, 0.12);
-        overflow: auto;
-      }
+        .section {
+            margin-bottom: 5px;
+        }
 
-      latex-js {
-        display: block;
-        min-width: 800px;
-      }
+        .experience-item,
+        .project-item,
+        .education-item {
+            margin-bottom: 5px;
+        }
+
+        .job-header,
+        .project-header,
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2px;
+            font-size: 0.85em;
+        }
+
+        .job-company,
+        .project-name,
+        .school-name {
+            font-weight: bold;
+        }
+
+        .job-duration,
+        .education-duration {
+            color: #7f8c8d;
+        }
+
+        ul {
+            padding-left: 12px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-size: 0.85em;
+        }
+
+        .technologies {
+            font-style: italic;
+            color: #2980b9;
+            font-size: 0.85em;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3px;
+            font-size: 0.85em;
+        }
+
+        /* Download button styling */
+        #download-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px) rotate(-5deg);
+            transition: opacity 1s ease-in-out, transform 0.5s ease-in-out;
+            z-index: 1000;
+        }
+
+        #download-container.show {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #download-button {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #download-button::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        #download-button:hover::before {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        #download-button svg {
+            margin-right: 10px;
+        }
+
+        #download-button::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+            left: 0;
+            top: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #download-button:hover::after {
+            opacity: 1;
+        }
+
+        .download-text {
+            display: inline-block;
+            position: relative;
+        }
+
+        .download-sparkle {
+            position: absolute;
+            background: white;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        @media print {
+            body {
+                max-width: 100%;
+                margin: 0;
+                padding: 3mm;
+            }
+
+            #download-container {
+                display: none;
+            }
+        }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/michael-brade/LaTeX.js@0.12.6/dist/latex.js"></script>
-  </head>
-  <body>
-    <main>
-      <section class="topbar">
-        <div>
-          <h1 class="title">Amr Abdelmaqsoud Resume</h1>
-          <p class="subtitle">Static HTML generated from <code>resume/cv.tex</code>.</p>
+</head>
+
+<body>
+    <header>
+        <h1>Amr Aly</h1>
+        <div class="job-title"><strong>Applying for:</strong> Software Engineer</div>
+        <div class="contact-info">
+            📧 <a href="mailto:amr.shams2015.as@gmail.com">amr.shams2015.as@gmail.com</a> |
+            🐙 <a href="https://github.com/Amr-Shams">GitHub: Amr-Shams</a> |
+            🌐 <a href="https://my-awesom-page.vercel.app">My Awesome Page</a>
         </div>
-        <div class="actions">
-          <a class="button" href="./public/resume.tex">Open LaTeX</a>
-          <button class="button secondary" type="button" onclick="window.print()">Print / Save PDF</button>
+    </header>
+
+    <section class="section">
+        <h2> Education</h2>
+
+        <div class="education-item">
+            <div class="education-header">
+                <div class="school-name">Cairo University – Cairo, Egypt</div>
+                <div class="education-duration">08/2019 – 01/2025</div>
+            </div>
+            <div>B.S. in Computer Engineering</div>
         </div>
-      </section>
-      <section class="resume-shell">
-        <latex-js baseURL="https://cdn.jsdelivr.net/gh/michael-brade/LaTeX.js@0.12.6/dist/" hyphenate="false">%% Amr Abdelmaqsoud | CV
-%% Compile with: pdflatex cv.tex
-\documentclass[a4paper,10pt]{article}
 
-\usepackage[margin=12mm, top=10mm, bottom=8mm]{geometry}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{helvet}
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{hyperref}
-\usepackage{titlesec}
-\usepackage{enumitem}
-\usepackage{multicol}
-\usepackage{tabularx}
+        <div class="education-item">
+            <div class="education-header">
+                <div class="school-name">San Jose State University – California, USA</div>
+                <div class="education-duration">08/2023 – 12/2023</div>
+            </div>
+            <div>Exchange Program</div>
+        </div>
+    </section>
 
-% Colors
-\definecolor{accent}{HTML}{1A5276}
-\definecolor{grey}{HTML}{555555}
-\definecolor{dark}{HTML}{2D2D2D}
-\definecolor{linkblue}{HTML}{2471A3}
-\definecolor{lightline}{HTML}{B0B0B0}
+    <hr>
 
-% Hyperlinks
-\hypersetup{
-    colorlinks=true,
-    linkcolor=linkblue,
-    urlcolor=linkblue,
-    pdfborder={0 0 0},
-}
+    <section class="section">
+        <h2> Experience</h2>
 
-% Section formatting
-\titleformat{\section}
-    {\color{accent}\bfseries\fontsize{9}{11}\selectfont\MakeUppercase}
-    {}
-    {0em}
-    {}
-    [\vspace{-0.5mm}\textcolor{lightline}{\rule{\linewidth}{0.5pt}}\vspace{0.5mm}]
-\titlespacing*{\section}{0pt}{2.5mm}{1mm}
+        <div class="experience-item">
+            <div class="job-header">
+                <div class="job-company">CrossWorkers</div>
+                <div class="job-duration">07/2024 – 09/2024</div>
+            </div>
+            <div class="job-title">Software Engineer Intern</div>
+            <ul>
+                <li>Migrated legacy PHP code to modern Laravel framework, improving maintainability.</li>
+                <li>Optimized SQL queries, reducing response time by 30%.</li>
+                <li>Developed frontend features using Vue.js and integrated profiling libraries.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> PHP, Laravel, Vue.js, SQL</div>
+        </div>
 
-% List formatting
-\setlist[itemize]{
-    leftmargin=7mm,
-    labelsep=2mm,
-    itemsep=0.3mm,
-    parsep=0pt,
-    topsep=0.3mm,
-    label=\textbullet,
-}
+        <div class="experience-item">
+            <div class="job-header">
+                <div class="job-company">Siemens</div>
+                <div class="job-duration">10/2023 – 05/2024</div>
+            </div>
+            <div class="job-title">Software Developer Intern</div>
+            <ul>
+                <li>Developed automation tools for testing and real-time data visualization.</li>
+                <li>Added new features for Angove tool, improving automated coverage testing.</li>
+                <li>Created an analysis tool to visualize and aggregate data from multiple sources.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> Python, Bash, Go, CLI</div>
+        </div>
 
-% Custom commands
-\newcommand{\role}[3]{%
-    {\fontsize{7.8}{9.5}\selectfont\textbf{#1 | #2}}\hfill{\fontsize{7.2}{8.8}\selectfont\textit{\textcolor{grey}{#3}}}\\[0.4mm]%
-}
+        <div class="experience-item">
+            <div class="job-header">
+                <div class="job-company">Bitnine Global</div>
+                <div class="job-duration">04/2023 – 10/2023</div>
+            </div>
+            <div class="job-title">Backend Developer Intern</div>
+            <ul>
+                <li>Developed gRPC, REST APIs, and socket apps using C, Go, and Node.js.</li>
+                <li>Built an internal graph database tool using C and Postgres.</li>
+                <li>Created a migration tool to automate data transfer with PgBulkload-like capabilities.</li>
+                <li>Increased vector search performance with Go and optimized cipher queries.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> C, Go, PHP, Postgres, Apache AGE, Neo4j</div>
+        </div>
+    </section>
 
-\newcommand{\project}[1]{%
-    {\fontsize{7.5}{9.5}\selectfont\textbf{#1}}\\[0.2mm]%
-}
+    <hr>
 
-\newcommand{\skillrow}[2]{%
-    \textbf{#1:} &amp; #2 \\[0.3mm]%
-}
+    <section class="section">
+        <h2> Projects</h2>
 
-% Body font size
-\newcommand{\bodysize}{\fontsize{7.3}{9.2}\selectfont}
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">OTNEngine – Graduation Project (2024)</div>
+            </div>
+            <ul>
+                <li>Developed a scalable simulation tool for OTN frames, reducing fabrication costs by 30%.</li>
+                <li>Built core functionalities using C++, Go, and PostgreSQL with a microservices architecture.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> C++, Go, PostgreSQL, Angular, AWS</div>
+        </div>
 
-% No page numbers
-\pagestyle{empty}
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">Blocker – Blockchain Simulator</div>
+            </div>
+            <ul>
+                <li>Simulated over 20 blockchain cases using Go and LevelDB.</li>
+                <li>Designed communication channels using REST, gRPC, and WebSockets.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> Go, LevelDB, Docker</div>
+        </div>
 
-\begin{document}
-\bodysize
-\color{dark}
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">Sniffer – ARP Protocol Decipher Extension</div>
+            </div>
+            <ul>
+                <li>Built a macOS decipher file using ARP to check the connected devices.</li>
+            </ul>
+            <div class="technologies"><strong>Technologies:</strong> React, Apple Script</div>
+        </div>
+    </section>
 
-% HEADER
-\begin{center}
-    {\fontsize{16}{18}\selectfont\bfseries\color{black} Amr Abdelmaqsoud}\\[0.5mm]
-    {\fontsize{7.5}{9.5}\selectfont\color{grey}
-        \href{mailto:amr.shams2015.as@gmail.com}{amr.shams2015.as@gmail.com}
-        \enspace\textbullet\enspace +20 106 365 9918
-        \enspace\textbullet\enspace Cairo, Egypt \textbullet\ Open to Relocation
-    }\\[0.8mm]
-    {\fontsize{7.5}{9.5}\selectfont\color{linkblue}
-        \href{https://github.com/Amr-Shams}{github.com/Amr-Shams}
-        \enspace\textbullet\enspace
-        \href{https://linkedin.com/in/amr-abdelmaqsoud-b5107519b}{linkedin.com/in/amr-abdelmaqsoud}
-        \enspace\textbullet\enspace
-        \href{https://shams.amr-shams2015-as.workers.dev}{shams.amr-shams2015-as.workers.dev}
-    }
-\end{center}
+    <hr>
 
-% SUMMARY
-\section{Summary}
-Software engineer with 3+ years of experience across backend systems, developer tooling,
-and full-stack applications. Core stack: Go, Python, Java, TypeScript. Active open-source
-contributor to the PostgreSQL ecosystem (pgmoneta), CNCF projects (Kubeflow, Meshery),
-and WebRTC infrastructure (Pion). Ships performance-sensitive systems, workflow
-orchestration engines, and tools used by real people.
+    <section class="section">
+        <h2> Skills</h2>
+        <div class="skills-container">
+            <div>
+                <strong>Programming Languages:</strong>
+                <p>Python, Go, C/C++, JavaScript, PHP, SQL</p>
+            </div>
+            <div>
+                <strong>Tools and Frameworks:</strong>
+                <p>Docker, Node, Vue.js, Postgres, Apache AGE, Bash, gRPC, REST APIs, React</p>
+            </div>
+            <div>
+                <strong>Languages:</strong>
+                <p>English (fluent), Arabic (native)</p>
+            </div>
+        </div>
+    </section>
 
-% TECHNICAL SKILLS
-\section{Technical Skills}
-\begin{tabularx}{\textwidth}{@{} l X @{}}
-    \skillrow{Languages}{Go, Python, Java, JavaScript / TypeScript, C/C++, OCaml}
-    \skillrow{Backend}{REST APIs, gRPC, Microservices, Kafka, WebSockets, Concurrency}
-    \skillrow{Databases}{PostgreSQL, Neo4j, Redis}
-    \skillrow{Infra}{Docker, Kubernetes, AWS (S3, EC2), Nginx, CI/CD, Prometheus, Grafana}
-    \skillrow{Frontend}{React, Vue.js, Next.js, React Flow, JavaFX}
-\end{tabularx}
+    <hr>
 
-% EXPERIENCE
-\section{Experience}
+    <section class="section">
+        <h2> Extracurricular</h2>
 
-\role{Software Engineer}{IKEA, Cairo}{Oct 2024 -- Nov 2025}
-\begin{itemize}
-    \item Built internal Go/PostgreSQL services for 1,000+ employees handling 10,000+ daily transactions; containerised and deployed on Kubernetes.
-    \item Led end-to-end feature delivery, redesigning workflows to reduce manual overhead by 40\% and improve operational efficiency by 25\%.
-\end{itemize}
+        <div class="experience-item">
+            <div class="job-title">Teaching Assistant – Cybersecurity Class, Cairo University</div>
+            <ul>
+                <li>Held summer sessions to guide students in cybersecurity topics.</li>
+            </ul>
+        </div>
 
-\role{Full Stack Developer (Contract)}{Fedni, Cairo}{Nov 2024 -- Sep 2025}
-\begin{itemize}
-    \item Led migration from VanillaJS to React, cutting bugs by 35\% and shipping 8+ features. Built real-time collaboration via WebSockets for 50+ concurrent users.
-\end{itemize}
+        <div class="experience-item">
+            <div class="job-title">Technical Writer</div>
+            <ul>
+                <li>Published articles on Dev Community and Hashnode, recognized as top posts.</li>
+            </ul>
+        </div>
+    </section>
 
-\role{PHP Developer (Part-Time)}{CrossWorkers, Cairo}{Jun 2024 -- Nov 2024}
-\begin{itemize}
-    \item Migrated platform from PHP 5.6 to 7.4/Laravel, shifted frontend modules to Vue, and optimised 15+ SQL queries for 30\% faster responses.
-\end{itemize}
+    <!-- Creative Download Button -->
+    <div id="download-container">
+        <button id="download-button" onclick="downloadResume()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15L8 11H16L12 15Z" fill="white" />
+                <path d="M12 3V11M12 15L8 11H16L12 15Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path
+                    d="M2 17L2.621 19.485C2.72915 19.9177 2.97882 20.3018 3.33033 20.5763C3.68184 20.8508 4.11501 20.9999 4.561 21H19.439C19.885 20.9999 20.3182 20.8508 20.6697 20.5763C21.0212 20.3018 21.2708 19.9177 21.379 19.485L22 17"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="download-text">
+                Download Resume
+                <span class="download-sparkle" style="top: -5px; left: 10px;"></span>
+                <span class="download-sparkle" style="top: 5px; left: 50px;"></span>
+                <span class="download-sparkle" style="top: 0px; left: 100px;"></span>
+                <span class="download-sparkle" style="top: 8px; left: 130px;"></span>
+            </span>
+        </button>
+    </div>
 
-\role{Software Engineer (Intern $\to$ Part-Time)}{Siemens, Cairo}{Jun 2023 -- Mar 2024}
-\begin{itemize}
-    \item Built data visualisation platform in Python/Dash aggregating real-time results from 5+ sources for 30+ engineers.
-    \item Developed TinyLFU caching with custom eviction policies for internal dashboards | work that extended the internship to a part-time role.
-    \item Automated reporting pipeline reducing manual analysis by 60\%.
-\end{itemize}
+    <script>
+        let isPrinting = false;
 
-\role{Software Engineer Intern}{Bitnine Global (Apache AGE), Remote}{Mar 2023 -- Nov 2023}
-\begin{itemize}
-    \item Extended Apache AGE Viewer with graph visualisation features and built a Cypher query builder for the graph database interface.
-\end{itemize}
+        function showDownloadButton() {
+            const downloadContainer = document.getElementById('download-container');
+            downloadContainer.classList.add('show');
+        }
 
-\role{Python Intern}{Master Micro, Cairo}{Jan 2023 -- Mar 2023}
-\begin{itemize}
-    \item Python development and testing across internal tooling projects.
-\end{itemize}
+        function hideDownloadButton() {
+            const downloadContainer = document.getElementById('download-container');
+            downloadContainer.classList.remove('show');
+        }
 
-% OPEN-SOURCE CONTRIBUTIONS
-\section{Open-Source Contributions}
-\begin{itemize}
-    \item \textbf{pgmoneta (PostgreSQL)} | Full S3 backup support end-to-end (\textasciitilde 15 PRs): rebuilt upload path, extended HTTP client, optimised workflow. Mentored by senior PostgreSQL contributor.
-    \item \textbf{Pion/Turn (WebRTC)} | Connection serialiser reducing CPU and memory footprint by \textasciitilde 30\% (under review).
-    \item \textbf{Meshery / Kubeflow (CNCF)} | Kubernetes operators, UI fixes, and caching optimisations for Meshery operator.
-    \item \textbf{Watermill} | Fixed concurrency bug with shared slices in scaled multi-threaded applications.
-    \item \textbf{Other} | pg\_bulkload (config DSL adopted upstream), pgexporter, optimagic (dynamic module loading), Jitsi Meet (polling feature).
-\end{itemize}
+        function downloadResume() {
+            hideDownloadButton();
+            isPrinting = true;
 
-% PROJECTS
-\section{Projects}
+            window.addEventListener('afterprint', handleAfterPrint);
 
-\project{Flow It | Claim Check Pattern Orchestrator}
-\begin{itemize}
-    \item Full-stack Go workflow engine processing 1,000+ tasks/hour. Replaced Kafka fat events with claim-check tokens, cutting server costs while keeping resilience. React Flow UI for 50+ node pipelines.
-\end{itemize}
+            setTimeout(checkPrintingStatus, 1000);
 
-\project{Collaborative Drawing | Undo/Redo Conflict Manager}
-\begin{itemize}
-    \item Conflict-aware undo/redo for a shared real-time canvas (1,000+ concurrent users), based on a classic concurrency control paper. Collision resolution and memory management.
-\end{itemize}
+            window.print();
+        }
 
-\project{Hotspot | Raycast Network Scanner Extension (\textasciitilde 800 downloads)}
-\begin{itemize}
-    \item macOS Raycast extension that scans local networks and identifies connected devices with IP/MAC addresses and estimated performance. Published on the Raycast Store.
-\end{itemize}
+        function handleAfterPrint() {
+            isPrinting = false;
+            window.removeEventListener('afterprint', handleAfterPrint);
+            setTimeout(showDownloadButton, 500);
+        }
 
-\project{Blocker | Blockchain Network Debugger}
-\begin{itemize}
-    \item P2P debugger analysing 500+ TPS with real-time monitoring. Network simulation for testing 20+ node configurations and consensus scenarios.
-\end{itemize}
+        function checkPrintingStatus() {
+            if (isPrinting) {
+                isPrinting = false;
+                showDownloadButton();
+            }
+        }
 
-\project{AOC 2025 in OCaml}
-\begin{itemize}
-    \item Advent of Code 2025 solutions in OCaml | picked up the language from scratch for the challenge.
-\end{itemize}
+        setTimeout(function () {
+            showDownloadButton();
 
-% EDUCATION
-\section{Education}
-\textbf{B.S. Computer Engineering} | Cairo University, Jan 2025\\
-\begin{itemize}
-    \item Top 4 Finalist, Advanced Database Graduation Project (out of 33 teams).
-\end{itemize}
-\textbf{Study Abroad (Scholarship)} | San Jose State University, Spring 2023
+            setInterval(function () {
+                const sparkles = document.querySelectorAll('.download-sparkle');
+                sparkles.forEach(sparkle => {
+                    sparkle.style.animation = 'none';
+                    void sparkle.offsetWidth; // Trigger reflow
+                    sparkle.style.animation = 'sparkle 2s infinite';
 
-\end{document}
-</latex-js>
-      </section>
-    </main>
-  </body>
+                    sparkle.style.top = Math.floor(Math.random() * 15 - 5) + 'px';
+                    sparkle.style.left = Math.floor(Math.random() * 140) + 'px';
+                });
+            }, 2000);
+        }, 5000); // 5 seconds delay
+    </script>
+</body>
+
 </html>

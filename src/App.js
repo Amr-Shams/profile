@@ -1,19 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
-import { HtmlGenerator, parse } from "latex.js";
 import html2pdf from "html2pdf.js/dist/html2pdf.bundle.min.js";
 import "./App.css";
 import resumeLatex from "./generated/resumeLatex";
 
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const existing = document.head.querySelector(`script[src="${src}"]`);
+    if (existing) {
+      if (window.customElements?.get("latex-js")) {
+        resolve();
+        return;
+      }
+
+      existing.addEventListener("load", resolve, { once: true });
+      existing.addEventListener("error", reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = src;
+    script.async = false;
+    script.onload = () => resolve();
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
 function injectLatexAssets() {
   const baseUrl = `${window.location.origin}${process.env.PUBLIC_URL || ""}/latexjs/`;
-  const assetMap = [
+  const stylesheets = [
     ["link", `${baseUrl}css/katex.css`],
-    ["link", `${baseUrl}documentclasses/article.css`],
     ["link", `${baseUrl}fonts/cmu.css`],
-    ["script", `${baseUrl}js/base.js`],
   ];
 
-  assetMap.forEach(([tagName, hrefOrSrc]) => {
+  stylesheets.forEach(([tagName, hrefOrSrc]) => {
     const selector =
       tagName === "link"
         ? `${tagName}[href="${hrefOrSrc}"]`
@@ -33,6 +53,11 @@ function injectLatexAssets() {
     }
     document.head.appendChild(node);
   });
+
+  return {
+    baseUrl,
+    scriptUrl: `${baseUrl}latex.js`,
+  };
 }
 
 function App() {
@@ -47,26 +72,33 @@ function App() {
       return undefined;
     }
 
-    try {
-      injectLatexAssets();
+    let mounted = true;
+    const { baseUrl, scriptUrl } = injectLatexAssets();
 
-      const generator = parse(resumeLatex, {
-        generator: new HtmlGenerator({ hyphenate: false }),
+    loadScript(scriptUrl)
+      .then(() => {
+        if (!mounted) {
+          return;
+        }
+
+        const latexElement = document.createElement("latex-js");
+        latexElement.setAttribute("baseURL", baseUrl);
+        latexElement.setAttribute("hyphenate", "false");
+        latexElement.textContent = resumeLatex;
+
+        target.replaceChildren(latexElement);
+        setIsRendering(false);
+      })
+      .catch(() => {
+        if (!mounted) {
+          return;
+        }
+        setRenderError("Failed to render the LaTeX resume.");
+        setIsRendering(false);
       });
 
-      const page = document.createElement("article");
-      page.className = "resume-page";
-      page.appendChild(generator.domFragment());
-      generator.applyLengthsAndGeometryToDom(page);
-
-      target.replaceChildren(page);
-      setIsRendering(false);
-    } catch (error) {
-      setRenderError("Failed to render the LaTeX resume.");
-      setIsRendering(false);
-    }
-
     return () => {
+      mounted = false;
       target.replaceChildren();
     };
   }, []);

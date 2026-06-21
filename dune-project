@@ -18,7 +18,11 @@
  (name profile)
  (synopsis "43 number")
  (description "a profile and blog host")
- (depends ocaml)
+ (depends
+  ocaml
+  (dune (>= 3.0))
+  cmarkit
+  yaml)
  (tags
   ("add topics" "to describe" your project)))
 

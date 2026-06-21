@@ -1,0 +1,4 @@
+(executable
+ (public_name site)
+ (name main)
+ (libraries profile))

@@ -1,0 +1,452 @@
+:root {
+  --bg: #1e1e1e;
+  --panel: #121212;
+  --text: #e2e2e2;
+  --muted: #919191;
+  --accent: #ffc107;
+  --link: #569cd6;
+  --border: #2a2a2a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.site {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+}
+
+/* header */
+
+header h1 {
+  font-size: 1.3em;
+  font-weight: 500;
+  margin: 0 0 4px;
+  color: var(--accent);
+}
+
+.sub {
+  color: var(--muted);
+  margin: 0 0 20px;
+  font-size: 0.85em;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: var(--link);
+  text-decoration: none;
+  font-size: 0.82em;
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+body[data-key-state="g"] .nav a[data-key^="g"] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* tabs */
+
+.tabs {
+  margin: 0 0 36px;
+}
+
+.tab {
+  display: none;
+}
+
+.tab:target {
+  display: block;
+}
+
+.tabs #about {
+  display: block;
+}
+
+.tabs:has(#blog:target) #about {
+  display: none;
+}
+
+.tabs:has(#about:target) #about {
+  display: block;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 18px 20px;
+}
+
+hr.sec {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 36px 0 28px;
+}
+
+/* about content */
+
+section#about p {
+  margin: 0 0 8px;
+}
+
+section#about ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+section#about ul li::before {
+  content: "- ";
+  color: var(--muted);
+}
+
+section#about h3 {
+  font-size: 0.92em;
+  font-weight: 500;
+  color: var(--link);
+  margin: 20px 0 8px;
+}
+
+/* section header (blog list) */
+
+h2 {
+  font-size: 0.9em;
+  font-weight: 500;
+  margin: 0 0 14px;
+  color: var(--muted);
+  text-transform: lowercase;
+}
+
+/* blog list */
+
+.lst {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover .tit {
+  color: var(--accent);
+}
+
+.tit {
+  display: block;
+  font-size: 0.92em;
+  transition: color 0.15s;
+}
+
+.dat {
+  display: block;
+  font-size: 0.75em;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.sum {
+  display: block;
+  font-size: 0.78em;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.5;
+}
+
+.new {
+  font-size: 0.6em;
+  color: var(--accent);
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+/* blog post */
+
+.brd {
+  font-size: 0.78em;
+  color: var(--muted);
+  margin: 0 0 20px;
+  letter-spacing: 0.05em;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.78em;
+  margin: 6px 0 28px;
+  line-height: 1.7;
+}
+
+.tags {
+  color: var(--link);
+}
+
+.back {
+  color: var(--link);
+  text-decoration: none;
+  font-size: 0.85em;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+/* article */
+
+article {
+  margin: 0 0 40px;
+}
+
+article.panel {
+  padding: 22px 24px;
+}
+
+article h1 {
+  font-size: 1.15em;
+  font-weight: 500;
+  color: var(--accent);
+  margin: 0 0 12px;
+}
+
+article h2 {
+  font-size: 1.05em;
+  font-weight: 500;
+  color: var(--accent);
+  margin: 28px 0 10px;
+}
+
+article h3 {
+  font-size: 0.92em;
+  font-weight: 500;
+  color: var(--link);
+  margin: 24px 0 8px;
+}
+
+article p {
+  margin: 12px 0;
+}
+
+article ul, article ol {
+  padding-left: 18px;
+  margin: 8px 0;
+}
+
+article li {
+  margin: 2px 0;
+}
+
+article a {
+  color: var(--link);
+}
+
+article a:hover {
+  opacity: 0.8;
+}
+
+article img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  margin: 12px 0;
+}
+
+article svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 760 / 380;
+  border: 1px solid var(--border);
+  margin: 12px 0;
+  background: #f8fafc;
+}
+
+article code {
+  background: var(--panel);
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-size: 0.88em;
+}
+
+article pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 0.82em;
+  line-height: 1.45;
+  margin: 12px 0;
+}
+
+article pre code {
+  background: none;
+  padding: 0;
+  font-size: 1em;
+}
+
+article blockquote {
+  margin: 12px 0;
+  padding: 8px 14px;
+  border-left: 2px solid var(--link);
+  background: var(--panel);
+  color: var(--muted);
+}
+
+article blockquote p {
+  margin: 2px 0;
+}
+
+article blockquote strong {
+  color: var(--text);
+}
+
+article hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.8em;
+}
+
+article div[role="region"] {
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+article table th,
+article table td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+article .right {
+  text-align: right;
+}
+
+article table th {
+  background: var(--panel);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+article table tr:nth-child(even) {
+  background: var(--panel);
+}
+
+article figure {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+article figcaption {
+  font-size: 0.75em;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* footer */
+
+footer {
+  margin: 36px 0;
+}
+
+.links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8em;
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+}
+
+.links a:hover {
+  color: var(--text);
+}
+
+.nav a,
+.links a {
+  transition: color 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+/* responsive */
+
+@media (max-width: 600px) {
+  .site {
+    padding: 32px 16px 60px;
+  }
+
+  .nav {
+    gap: 14px;
+  }
+
+  .links {
+    gap: 12px;
+  }
+}
+
+/* focus */
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* scrollbar */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}

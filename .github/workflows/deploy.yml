@@ -14,13 +14,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: "5.2"
 
-      - name: Install dependencies
-        run: bun install
+      - name: Install OCaml dependencies
+        run: opam install . --deps-only
 
-      - name: Build project
-        run: bun run build
+      - name: Build site generator
+        run: dune build
+
+      - name: Generate site
+        run: dune exec bin/main.exe
 
       - name: Build & Deploy Worker
         uses: cloudflare/wrangler-action@v3

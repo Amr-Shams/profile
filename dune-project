@@ -20,7 +20,7 @@
  (description "a profile and blog host")
  (depends
   ocaml
-  (dune (>= 3.0))
+  (dune (>= 3.23))
   cmarkit
   yaml)
  (tags
